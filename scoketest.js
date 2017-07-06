@@ -1,7 +1,11 @@
 
-var io = require('socket.io')(880);
 
-console.log('connect success')
+const express = require('express');
+const app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io').listen(server);
+app.use('/', express.static(__dirname + '/index'));
+server.listen(880);
 
 
 io.on('connection', function (socket) {

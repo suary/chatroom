@@ -9,7 +9,9 @@
     <link href="http://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="http://apps.bdimg.com/libs/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="http://cdn.bootcss.com/blueimp-md5/1.1.0/js/md5.min.js"></script>
-    <script src="socket.io/2.0.3/socket.io.js"></script>
+    <!--<script src="/socket.io/socket.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+
 
     <link href="css/main.css" rel="stylesheet">
 
@@ -37,18 +39,20 @@
         <br>
         <button id="sure2" class="btn btn-defult">提交</button>
     </div>
-
-    <div id="phase3" style="display:none" class="alert alert-success fixbottom fixright" role="alert">
+    <div id="phase3" style="display:none">
+    <div class="alert alert-success fixbottom fixright" role="alert">
         <div>
             <input type="text" class="form-control w300 inline-block mr10" id="input"><button id="submit" class="btn btn-defult">发送</button>
         </div>
     </div>
+    </div>
 
-    <div id="textarea"></div>
+    <div class="w800 mat" style="background-color:#F1F1F1; top:0px;height:inherit" id="textarea"></div>
 </body>
 <script>
     var usermode = ''
     $("#submit").on('click', function () {
+        console.log(usermode)
         if (usermode == 'fst' || usermode == 'sec') {
             if ($("#input").val()) {
                 socket.emit('input event', { name: $("#yourname").val(), text: $("#input").val() });
@@ -61,6 +65,10 @@
         $("#phase1").css('display', 'none');
         $("#phase2").css('display', '');
         socket = io(location.hostname + ':880/' + $('input:radio:checked').val());
+        socket.on('userinfo', function (data) {
+                console.log(data)
+                beginway(data.usertype)
+            });
         
 
     })
@@ -74,10 +82,7 @@
                 console.log(data)
                 $("#textarea").html($("#textarea").html() + data.name + ':' + data.text + '<br>')
             });
-            socket.on('userinfo', function (data) {
-                console.log(data)
-                beginway(data.usertype)
-            });
+            
         }
     })
     function beginway(type) {

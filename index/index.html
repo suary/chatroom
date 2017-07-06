@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>guide</title>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!--<link href="http://apps.bdimg.com/libs/bootstrap/3.2.0/bootstrap-theme.min.css" rel="stylesheet">-->
+    <link href="http://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://apps.bdimg.com/libs/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="http://cdn.bootcss.com/blueimp-md5/1.1.0/js/md5.min.js"></script>
+    <script src="socket.io/2.0.3/socket.io.js"></script>
+
+    <link href="css/main.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div id="phase1" style="text-align:center">
+        <h1>请先选择您的聊天室</h1>
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-success active">
+                <input name="server" value="chat" type="radio" checked>room 0
+            </label>
+            <label class="btn btn-success">
+                <input name="server" value="news" type="radio">room 1
+            </label>
+        </div>
+        <br>
+        <br>
+        <button id="sure" class="btn btn-defult">提交</button>
+    </div>
+    <div id="phase2" style="text-align:center;display:none">
+        <h1>请输入你的名字</h1>
+        <input type="text" class="form-control w300 inline-block" id="yourname" placeholder="你的名字">
+        <br>
+        <br>
+        <button id="sure2" class="btn btn-defult">提交</button>
+    </div>
+
+    <div id="phase3" style="display:none" class="alert alert-success fixbottom fixright" role="alert">
+        <div>
+            <input type="text" class="form-control w300 inline-block mr10" id="input"><button id="submit" class="btn btn-defult">发送</button>
+        </div>
+    </div>
+
+    <div id="textarea"></div>
+</body>
+<script>
+    var usermode = ''
+    $("#submit").on('click', function () {
+        if (usermode == 'fst' || usermode == 'sec') {
+            if ($("#input").val()) {
+                socket.emit('input event', { name: $("#yourname").val(), text: $("#input").val() });
+            }
+        } else {
+            alert('当前聊天室人数已经超过两人，您已经被限制发言')
+        }
+    })
+    $("#sure").on('click', function () {
+        $("#phase1").css('display', 'none');
+        $("#phase2").css('display', '');
+        socket = io(location.hostname + ':880/' + $('input:radio:checked').val());
+        
+
+    })
+    $("#sure2").on('click', function () {
+        if ($('input:radio:checked').val()) {
+            $("#phase2").css('display', 'none');
+            $("#phase3").css('display', '')
+            socket.emit('new user', { username: $("#yourname").val()});
+            
+            socket.on('new message', function (data) {
+                console.log(data)
+                $("#textarea").html($("#textarea").html() + data.name + ':' + data.text + '<br>')
+            });
+            socket.on('userinfo', function (data) {
+                console.log(data)
+                beginway(data.usertype)
+            });
+        }
+    })
+    function beginway(type) {
+        if (type == 'whiteuser') {
+            usermode = 'fst'
+            waitmove = true
+        } else if (type == 'blackuser') {
+            usermode = 'sec'
+            waitmove = false
+        } else {
+            usertype = 'none'
+        }
+    }
+
+</script>
+
+</html>

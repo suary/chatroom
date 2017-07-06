@@ -1,0 +1,102 @@
+html,body,.container-fluid{
+	height: 100%;
+}
+li{
+	list-style-type: none;
+	cursor: pointer;
+}
+.guidelist{
+	background-color: #DDDDDD;
+	padding-left: 5px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	height: 100%;
+}
+.guidelist li{
+	background-color: #F0F0F0;
+	margin-bottom: 5px;
+	border-radius: 2px;
+	cursor: pointer;
+	text-align: center;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	margin-right: 3px;
+	margin-left: 3px;
+}
+.m0{
+	margin: 0;
+}
+.p0{
+	padding: 0;
+}
+.ml0{
+	margin-left: 0;
+}
+.mr0{
+	margin-right: 0;
+}
+.pl0{
+	padding-left: 0;
+}
+.pr0{
+	padding-right: 0;
+}
+.fht{
+	height: 100%;
+}
+.fwt{
+	width: 100%;
+}
+.inline{
+	display: inline;
+}
+.inline-block{
+	display: inline-block;
+}
+.w200{
+	width: 200px;
+}
+.w300{
+	width: 300px;
+}
+.w400{
+	width: 400px;
+}
+.w500{
+	width: 500px;
+}
+.ofh{
+	overflow: hidden;
+}
+.fr{
+	float: right;
+}
+.fl{
+	float: left;
+}
+.pagination>li>a{
+	cursor: pointer;
+}
+.mt50{
+	margin-top: 50px;
+}
+.mr10{
+	margin-right: 10px;
+}
+.mr20{
+	margin-right: 20px;
+}
+.mt10{
+	margin-top: 10px;
+}
+.mt20{
+	margin-top: 20px;
+}
+.fixbottom{
+	position: fixed;
+	bottom: 0px;
+}
+.fixright{
+	position: fixed;
+	right: 0px;
+}

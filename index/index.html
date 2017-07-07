@@ -18,9 +18,9 @@
 </head>
 
 <body>
-    <div id="phase1" style="height:30%;top:25%;position:relative;text-align:center;">
+    <div id="phase1" style="text-align:center">
         <h1>请先选择您的聊天室</h1>
-        <div class="btn-group mt20" data-toggle="buttons">
+        <div class="btn-group" data-toggle="buttons">
             <label class="btn btn-success active">
                 <input name="server" value="chat" type="radio" checked>room 0
             </label>
@@ -30,27 +30,24 @@
         </div>
         <br>
         <br>
-        <button id="sure" class="btn btn-defult mt20">提交</button>
+        <button id="sure" class="btn btn-defult">提交</button>
     </div>
-    <div id="phase2" style="text-align:center;display:none;height:30%;top:25%;position:relative;">
+    <div id="phase2" style="text-align:center;display:none">
         <h1>请输入你的名字</h1>
-        <input type="text" class="form-control w300 inline-block mt20" id="yourname" placeholder="">
+        <input type="text" class="form-control w300 inline-block" id="yourname" placeholder="你的名字">
         <br>
         <br>
-        <button id="sure2" class="btn btn-defult mt10">提交</button>
+        <button id="sure2" class="btn btn-defult">提交</button>
     </div>
-    <div id="phase3" style="display:none" class="fht">
-    
-    <div class="w800 mat" style="background-color:#F1F1F1; top:0px;height:inherit" id="textarea">
-        <div class="alert alert-success bottom w800 ml-5 mb0" role="alert">
+    <div id="phase3" style="display:none">
+    <div class="alert alert-success fixbottom fixright" role="alert">
         <div>
             <input type="text" class="form-control w300 inline-block mr10" id="input"><button id="submit" class="btn btn-defult">发送</button>
         </div>
     </div>
     </div>
-    </div>
 
-    
+    <div class="w800 mat" style="background-color:#F1F1F1; top:0px;height:inherit" id="textarea"></div>
 </body>
 <script>
     var usermode = ''

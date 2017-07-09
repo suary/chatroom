@@ -5,7 +5,7 @@ const app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 app.use('/', express.static(__dirname + '/index'));
-server.listen(880);
+server.listen(127.0.0.1:880);
 
 
 io.on('connection', function (socket) {

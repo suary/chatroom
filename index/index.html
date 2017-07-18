@@ -17,7 +17,7 @@
 
 </head>
 
-<body>
+<body style="background-color:#F1F1F1; ">
     <div id="phase1" style="text-align:center">
         <h1>请先选择您的聊天室</h1>
         <div class="btn-group" data-toggle="buttons">
@@ -40,64 +40,23 @@
         <button id="sure2" class="btn btn-defult">提交</button>
     </div>
     <div id="phase3" style="display:none;height:inherit">
+        <div class="w800 mat" style="top:0px;height:inherit">
+        <div id="textarea" class="pt20" style="height:100%;padding-bottom:120px;overflow:auto; background-color:#FFFFFF; "></div>
     
-        <div>
-            <input type="text" class="form-control w300 inline-block mr10" id="input"><button id="submit" class="btn btn-defult">发送</button>
+        <div class="alert alert-success w800" style="height:120px;margin-bottom:0px;position:absolute;bottom:0px;" role="alert">
+            <div class="col-md-10 fht">
+                <textarea type="text" class="form-control fwt inline-block mr10" style="height:100%;resize:none" id="input"></textarea>
+            </div>
+            <div class="col-md-2 fht">
+                <button id="submit" class="btn fwt btn-defult" style="height:100%;">发送</button>
+            </div>
         </div>
-    </div><div class="w800 mat" style="background-color:#F1F1F1; top:0px;height:inherit" id="textarea"></div>
-    <div class="alert alert-success fixbottom fixright" role="alert">
+        </div>
     </div>
 
     
 </body>
-<script>
-    var usermode = ''
-    $("#submit").on('click', function () {
-        console.log(usermode)
-        if (usermode == 'fst' || usermode == 'sec') {
-            if ($("#input").val()) {
-                socket.emit('input event', { name: $("#yourname").val(), text: $("#input").val() });
-            }
-        } else {
-            alert('当前聊天室人数已经超过两人，您已经被限制发言')
-        }
-    })
-    $("#sure").on('click', function () {
-        $("#phase1").css('display', 'none');
-        $("#phase2").css('display', '');
-        socket = io(location.hostname + ':880/' + $('input:radio:checked').val());
-        socket.on('userinfo', function (data) {
-                console.log(data)
-                beginway(data.usertype)
-            });
-        
-
-    })
-    $("#sure2").on('click', function () {
-        if ($('input:radio:checked').val()) {
-            $("#phase2").css('display', 'none');
-            $("#phase3").css('display', '')
-            socket.emit('new user', { username: $("#yourname").val()});
-            
-            socket.on('new message', function (data) {
-                console.log(data)
-                $("#textarea").html($("#textarea").html() + data.name + ':' + data.text + '<br>')
-            });
-            
-        }
-    })
-    function beginway(type) {
-        if (type == 'whiteuser') {
-            usermode = 'fst'
-            waitmove = true
-        } else if (type == 'blackuser') {
-            usermode = 'sec'
-            waitmove = false
-        } else {
-            usertype = 'none'
-        }
-    }
-
+<script src="js/main.js">
 </script>
 
 </html>

@@ -4,10 +4,12 @@ const express = require('express');
 const app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
+var c = require('child_process');
+
 app.use('/', express.static(__dirname + '/index'));
 server.listen(880);
 
-
+c.exec('start http://127.0.0.1:880');
 io.on('connection', function (socket) {
     console.log('acc')
   socket.emit('news', { hello: 'world' });
@@ -31,18 +33,19 @@ var chat = io
         }else{
             chat.emit('userinfo',{usertype:'watcher'});
         }
-        chat.emit('new message',{name:'当前房间人数',text:chatcount});
+        chat.emit('new talker',{name:'当前房间人数',text:chatcount});
         socket.on('input event', function (data) {
             console.log(444);
-            chat.emit('new message',data);
+            socket.broadcast.emit('new message',data);
+            socket.emit('my message',data);
         });
         socket.on('new user', function (data) {
             socket.username = data.username;
-            chat.emit('new message',{name:'加入新用户',text:data.username});
+            chat.emit('new join',{name:'加入新用户',text:data.username});
         });
         socket.on('disconnect', function () { 
             chatcount=chatcount-1
-            chat.emit('new message',{name:'当前房间人数',text:chatcount});
+            chat.emit('new talker',{name:'当前房间人数',text:chatcount});
             socket.broadcast.emit('user left', {
                 username: socket.username
             });

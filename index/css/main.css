@@ -98,6 +98,24 @@ li{
 .mt20{
 	margin-top: 20px;
 }
+.mb20{
+	margin-bottom: 20px;
+}
+.pt20{
+	padding-top: 20px;
+}
+.pt10{
+	padding-top: 10px;
+}
+.pt5{
+	padding-top: 5px;
+}
+.pt30{
+	padding-top: 30px;
+}
+.pt50{
+	padding-top: 50px;
+}
 .fixbottom{
 	position: fixed;
 	bottom: 0px;
@@ -111,4 +129,58 @@ li{
 }
 .center{
 	margin: 0 auto;
+}
+.tc{
+	text-align: center;
+}
+.tl{
+	text-align: left;
+}
+.tr{
+	text-align: right;
+}
+.newusertootip{
+	background-color: antiquewhite;
+    border-radius: 25px;
+    padding: 5px;
+}
+.left-bubble{
+	float: left;
+    background-color: aqua;
+    border-radius: 10px;
+	border-top-left-radius: 0px;
+	min-height: 50px;
+	min-width: 100px;
+	max-width: 500px;
+	overflow: hidden;
+	line-height: 42px;
+	padding: 0 15px;
+	word-break:break-word;
+}
+.left-tangle{
+	float: left;
+    border-right: 20px solid aqua;
+    border-top: 15px solid transparent;
+}
+.right-bubble{
+	float: right;
+    background-color: lightgreen;
+    border-radius: 10px;
+	border-top-right-radius: 0px;
+	min-height: 50px;
+	min-width: 100px;
+	max-width: 500px;
+	overflow: hidden;
+	line-height: 42px;
+	padding: 0 15px;
+	word-break:break-word;
+}
+.right-tangle{
+	float: right;
+    border-left: 20px solid lightgreen;
+    border-top: 15px solid transparent;
+}
+.username{
+	font-size: x-large;
+    margin: 0 10px;
 }

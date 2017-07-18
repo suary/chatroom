@@ -19,13 +19,28 @@ var usermode = ''
             
             socket.on('new message', function (data) {
                 console.log(data)
-                $("#textarea").html($("#textarea").html() + data.name + ':' + data.text + '<br>')
+                $("#textarea").html($("#textarea").html() +'<div class="ofh mt20 mb20"><span class="fl username">'+data.name+'</span><div class="left-tangle"></div><div class="left-bubble">'+ data.text  +'</div></div>')
+                $("#textarea").scrollTop($("#textarea")[0].scrollHeight);
+            });
+            socket.on('my message', function (data) {
+                console.log(data)
+                $("#textarea").html($("#textarea").html() +'<div class="ofh mt20 mb20"><span class="fr username">'+data.name+'</span><div class="right-tangle"></div><div class="right-bubble">'+ data.text  +'</div></div>')
+                $("#textarea").scrollTop($("#textarea")[0].scrollHeight);
+            });
+            socket.on('new talker', function (data) {
+                console.log(data)
+                $("#textarea").html($("#textarea").html() +'<div class="ofh mt20 mb20"><span class="fl username">系统提示</span><div class="left-tangle"></div><div class="left-bubble">'+data.name+'：'+ data.text  +'</div></div>')
+                $("#textarea").scrollTop($("#textarea")[0].scrollHeight);
+            });
+            socket.on('new join', function (data) {
+                console.log(data)
+                $("#textarea").html($("#textarea").html() +'<p class="tc"><span class="newusertootip">'+ data.name + ':' + data.text  +'</span></p>')
+                $("#textarea").scrollTop($("#textarea")[0].scrollHeight);
             });
             
         }
     })
     $("#submit").on('click', function () {
-        debugger
         console.log(usermode)
         if (usermode == 'fst' || usermode == 'sec') {
             if ($("#input").val()) {

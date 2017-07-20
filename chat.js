@@ -23,21 +23,22 @@ io.on('connection', function (socket) {
 });
 var roomlist=[{name:'chat',count:0},{name:'news',count:0}]
 
-for(var i=0;i<roomlist.length-1;i++){
+for(var i=0;i<roomlist.length;i++){
     console.log(roomlist[i])
 roomlist[i].callback = io
   .of('/'+roomlist[i].name)
   .on('connection', function (socket) {
       console.log(this)
-    roomlist[i].count = roomlist[i].count+1
-        if(roomlist[i].count==1){
+      if(this.menbercount){this.menbercount++}else{this.menbercount=1}
+    
+        if(this.menbercount==1){
             this.emit('userinfo',{usertype:'whiteuser'});
-        }else if(roomlist[i].count==2){
+        }else if(this.menbercount==2){
             this.emit('userinfo',{usertype:'blackuser'});
         }else{
             this.emit('userinfo',{usertype:'watcher'});
         }
-        this.emit('new talker',{name:'当前房间人数',text:roomlist[i].count});
+        this.emit('new talker',{name:'当前房间人数',text:this.menbercount});
         socket.on('input event', function (data) {
             console.log(444);
             socket.broadcast.emit('new message',data);
@@ -48,15 +49,15 @@ roomlist[i].callback = io
             this.emit('new join',{name:'加入新用户',text:data.username});
         });
         socket.on('disconnect', function () { 
-            roomlist[i].count=roomlist[i].count-1
-            this.emit('new talker',{name:'当前房间人数',text:roomlist[i].count});
+            this.menbercount=this.menbercount-1
+            this.emit('new talker',{name:'当前房间人数',text:this.menbercount});
             socket.broadcast.emit('user left', {
                 username: socket.username
             });
         });
   });
 }
-
+console.log(roomlist)
 
 /* var newscount=0
 var news = io

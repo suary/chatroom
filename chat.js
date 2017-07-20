@@ -21,19 +21,23 @@ io.on('connection', function (socket) {
     socket.emit('new message',data);
   });
 });
-var chatcount=0
-var chat = io
-  .of('/chat')
+var roomlist=[{name:'chat',count:0},{name:'news',count:0}]
+
+for(var i=0;i<roomlist.length-1;i++){
+    console.log(roomlist[i])
+roomlist[i].callback = io
+  .of('/'+roomlist[i].name)
   .on('connection', function (socket) {
-    chatcount=chatcount+1
-        if(chatcount==1){
-            chat.emit('userinfo',{usertype:'whiteuser'});
-        }else if(chatcount==2){
-            chat.emit('userinfo',{usertype:'blackuser'});
+      console.log(this)
+    roomlist[i].count = roomlist[i].count+1
+        if(roomlist[i].count==1){
+            this.emit('userinfo',{usertype:'whiteuser'});
+        }else if(roomlist[i].count==2){
+            this.emit('userinfo',{usertype:'blackuser'});
         }else{
-            chat.emit('userinfo',{usertype:'watcher'});
+            this.emit('userinfo',{usertype:'watcher'});
         }
-        chat.emit('new talker',{name:'当前房间人数',text:chatcount});
+        this.emit('new talker',{name:'当前房间人数',text:roomlist[i].count});
         socket.on('input event', function (data) {
             console.log(444);
             socket.broadcast.emit('new message',data);
@@ -41,17 +45,20 @@ var chat = io
         });
         socket.on('new user', function (data) {
             socket.username = data.username;
-            chat.emit('new join',{name:'加入新用户',text:data.username});
+            this.emit('new join',{name:'加入新用户',text:data.username});
         });
         socket.on('disconnect', function () { 
-            chatcount=chatcount-1
-            chat.emit('new talker',{name:'当前房间人数',text:chatcount});
+            roomlist[i].count=roomlist[i].count-1
+            this.emit('new talker',{name:'当前房间人数',text:roomlist[i].count});
             socket.broadcast.emit('user left', {
                 username: socket.username
             });
         });
   });
-var newscount=0
+}
+
+
+/* var newscount=0
 var news = io
   .of('/news')
   .on('connection', function (socket) {
@@ -77,4 +84,4 @@ var news = io
             news.emit('new message',{name:'当前房间人数',text:newscount});
             socket.broadcast.emit('new message', {name:'用户离开',text:data.username});
         });
-  });
+  }); */

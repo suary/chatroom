@@ -29,6 +29,8 @@ for (var i = 0; i < roomlist.length; i++) {
         .of('/' + roomlist[i].name)
         .on('connection', function (socket) {
             console.log(this)
+            var _this=this
+            if(_this.menberlist){} else { _this.menberlist=[]  }
             if (this.menbercount) { this.menbercount++ } else { this.menbercount = 1 }
 
             if (this.menbercount == 1) {
@@ -46,6 +48,8 @@ for (var i = 0; i < roomlist.length; i++) {
             });
             socket.on('new user', function (data) {
                 socket.username = data.username;
+                _this.menberlist.push(socket.username)
+                console.log(_this.menberlist)
                 this.emit('new join', { name: '加入新用户', text: data.username });
             });
             socket.on('disconnect', function () {
